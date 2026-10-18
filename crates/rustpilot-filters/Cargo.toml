@@ -1,0 +1,11 @@
+[package]
+name = "rustpilot-filters"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Scalar low-pass filters translated from pinned ArduPilot source"
+
+[lints]
+workspace = true

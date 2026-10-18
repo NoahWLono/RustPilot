@@ -1,0 +1,102 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.10s
+     Running unittests src/lib.rs (target/debug/deps/rustpilot_checksums-bb9615ceb913a2f0)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/behavior.rs (target/debug/deps/behavior-527efce049e62d92)
+
+running 5 tests
+test byte_operations_and_nonstandard_tables_have_literal_checks ... ok
+test empty_inputs_preserve_seeds_except_documented_output_xors ... ok
+test standard_check_vectors_catch_polynomial_seed_and_final_xor_errors ... ok
+test slice_lengths_extend_upstream_counters_without_truncation ... ok
+test streaming_updates_are_associative_and_reflected_output_xor_is_explicit ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.42s
+
+     Running tests/upstream.rs (target/debug/deps/upstream-5cf89b45e0a25338)
+
+running 2 tests
+test reference_source_reads_ignore_git_replacement_objects ... ok
+Compared 212 fixtures x 28 functions = 5936 outputs against actual afeb9c4941543d97f3e04fecf257b8f598f49a6a crc.cpp
+test all_28_functions_match_actual_pinned_upstream_cpp ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.94s
+
+     Running unittests src/lib.rs (target/debug/deps/rustpilot_filters-6ec19394f4a76188)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/behavior.rs (target/debug/deps/behavior-2e897d329e32c08a)
+
+running 7 tests
+test alpha_boundaries_use_upstream_epsilon_and_branch_order ... ok
+test defaults_have_defined_zero_output_and_disabled_cutoff ... ok
+test constant_step_matches_variable_step_and_handles_disabled_sample_rate ... ok
+test digital_initialization_reset_and_unclamped_alpha ... ok
+test finite_arithmetic_overflow_is_preserved_and_reset_recovers ... ok
+test nonfinite_values_have_explicit_ieee_propagation ... ok
+test variable_cutoff_and_reset_sequence ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/differential.rs (target/debug/deps/differential-20a39aaf7bbac65f)
+
+running 3 tests
+test replacement_objects_do_not_override_pinned_source ... ok
+test hidden_worktree_source_changes_are_rejected ... ok
+5006 scalar outputs matched (NaN payloads ignored); actual pinned LowPassFilter.cpp plus extracted alpha
+test actual_pinned_cpp_scalar_filters_and_extracted_alpha_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.88s
+
+     Running unittests src/lib.rs (target/debug/deps/rustpilot_migration-1c540c6d6d3d1275)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/rustpilot_migration-d2faa278e972f6e6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/inventory.rs (target/debug/deps/inventory-2449dbcd458daca5)
+
+running 11 tests
+test forbids_output_inside_the_reference_checkout ... ok
+test rejects_index_flags_that_can_hide_tracked_dirt ... ok
+test cli_requires_the_reviewed_upstream_pin ... ok
+test rejects_revision_mismatch_and_tracked_dirt_before_writing ... ok
+test configured_fsmonitor_is_disabled_and_replacement_objects_are_ignored ... ok
+test configured_clean_and_process_filters_are_rejected_without_execution ... ok
+test inventories_every_blob_hardware_and_static_waf_evidence_deterministically ... ok
+test rejects_staged_gitlink_change_with_missing_checkout ... ok
+test rejects_staged_gitlink_change_even_when_child_matches_head_pin ... ok
+test recursively_pins_nested_submodules_and_rejects_child_tracked_changes ... ok
+test reports_missing_submodule_then_recurses_and_rejects_drift ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+
+   Doc-tests rustpilot_checksums
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests rustpilot_filters
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests rustpilot_migration
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

@@ -1,0 +1,14 @@
+RustPilot source inventory
+Upstream revision: afeb9c4941543d97f3e04fecf257b8f598f49a6a
+Root entries: 8464
+All entries including recursive submodules: 25366
+Inventoried repositories: 17
+Missing submodule checkouts: 0
+Root library directories: 156
+Hardware definition directories: 508
+Hardware definition files: 927
+Static Waf class declarations: 9
+Ported units: 0
+Supported firmware targets: 0
+External SDK/package/toolchain closure: unresolved
+Inventory counts describe source scope only. All hardware and Waf evidence is unsupported.

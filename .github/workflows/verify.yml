@@ -1,0 +1,49 @@
+name: Verify migration increment
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install pinned bootstrap toolchain
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy
+      - name: Formatting and lint
+        run: |
+          cargo fmt --all -- --check
+          cargo clippy --workspace --all-targets --locked -- -D warnings
+      - name: Ordinary host tests and release build
+        run: |
+          cargo test --workspace --locked
+          cargo build --workspace --release --locked
+      - name: Fetch pinned upstream reference and dependencies
+        run: |
+          mkdir -p reference/ardupilot
+          git -C reference/ardupilot init
+          git -C reference/ardupilot remote add origin https://github.com/ArduPilot/ardupilot.git
+          git -C reference/ardupilot fetch --depth 1 origin afeb9c4941543d97f3e04fecf257b8f598f49a6a
+          git -C reference/ardupilot checkout --detach FETCH_HEAD
+          git -C reference/ardupilot submodule update --init --recursive --depth 1 --jobs 4
+      - name: Actual upstream differential tests, debug and release
+        env:
+          ARDUPILOT_REFERENCE: ${{ github.workspace }}/reference/ardupilot
+        run: |
+          cargo test --workspace --locked -- --include-ignored --nocapture
+          cargo test --workspace --release --locked -- --include-ignored --nocapture
+      - name: Verify recursive baseline inventory
+        run: |
+          cargo run --locked -p rustpilot-migration -- inventory reference/ardupilot target/inventory
+          diff -ru crates/rustpilot-migration/baseline target/inventory
+      - name: Cortex-M library compile checks (not firmware qualification)
+        run: |
+          rustup target add --toolchain 1.95.0 thumbv6m-none-eabi thumbv7em-none-eabihf
+          cargo build --locked --release -p rustpilot-checksums -p rustpilot-filters --target thumbv6m-none-eabi
+          cargo build --locked --release -p rustpilot-checksums -p rustpilot-filters --target thumbv7em-none-eabihf

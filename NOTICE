@@ -1,0 +1,37 @@
+RustPilot is an independent Rust migration effort based on ArduPilot.
+Upstream: https://github.com/ArduPilot/ardupilot
+Baseline: afeb9c4941543d97f3e04fecf257b8f598f49a6a
+
+Credit belongs to the ArduPilot contributors and the authors of the original
+components. The upstream repository and commit history identify their work.
+RustPilot does not imply affiliation with or endorsement by ArduPilot.
+
+Initial derived sources:
+  libraries/AP_Math/crc.cpp
+  libraries/AP_Math/crc.h
+  libraries/Filter/LowPassFilter.cpp
+  libraries/Filter/LowPassFilter.h
+  libraries/AP_Math/AP_Math.cpp (calc_lowpass_alpha_dt)
+
+The listed upstream files contain GNU GPL version 3-or-later notices.
+The complete GPL version 3 text is distributed in LICENSE, copied from
+ArduPilot's COPYING.txt at the pinned revision.
+
+The CRC16 portion of upstream crc.cpp also carries this notice, retained here:
+
+Copyright (C) 2010 Swift Navigation Inc.
+Contact: Fergus Noble <fergus@swift-nav.com>
+
+This source is subject to the license found in the file 'LICENSE' which must
+be be distributed together with this source. All other rights reserved.
+
+THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+Submodules are reference inputs, not relicensed copies in this repository.
+Any later translated or redistributed dependency must retain its own notices
+and applicable license obligations.
+
+Initial Rust translations and host tooling were AI-assisted using OpenAI Codex
+and delegated coding agents at the repository owner's request, October 2026.
