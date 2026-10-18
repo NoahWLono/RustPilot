@@ -30,7 +30,10 @@ pub mod ordered;
 pub mod square_root;
 pub mod tangent;
 pub mod vector;
+pub mod vector_geometry;
 pub mod vector_math;
+pub mod vector_ops;
+pub mod vector_predicates;
 
 pub use buffered::Filter;
 

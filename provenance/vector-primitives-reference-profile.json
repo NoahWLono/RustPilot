@@ -1,0 +1,70 @@
+{
+  "scope": "Bounded host vector arithmetic, predicates, indexing observations and projection comparisons; full firmware and embedded targets remain unqualified",
+  "ardupilot_revision": "afeb9c4941543d97f3e04fecf257b8f598f49a6a",
+  "compiler_image": "docker.io/library/gcc@sha256:3f73339bf0d3d64081cac3f6d9fdafc6dd4cef2b9c49e0a09f91e97cb0eb139a",
+  "architecture": "x86_64 Linux, little-endian IEEE binary32/binary64",
+  "reference_compiler": "GCC 16.2.0",
+  "reference_glibc": "2.41 inside pinned container",
+  "rust_toolchain": "1.95.0-x86_64-unknown-linux-gnu",
+  "reference_flags": [
+    "-std=c++17",
+    "-O2",
+    "-ffp-contract=off"
+  ],
+  "vector_profile": {
+    "HAL_DEBUG_BUILD": 1,
+    "HAL_WITH_EKF_DOUBLE": [
+      0,
+      1
+    ],
+    "AP_MATH_ALLOW_DOUBLE_FUNCTIONS": [
+      0,
+      1
+    ],
+    "translation_units": "Separate driver and extracted vector implementation; predicates also use separate extracted AP_Math equality implementation; actual inline header methods retained",
+    "sanitizers": false,
+    "LTO": false
+  },
+  "floating_environment": {
+    "rounding": "nearest, ties to even",
+    "FTZ": false,
+    "DAZ": false
+  },
+  "comparison": "Every returned bit including NaN signs/payloads and signed zeros; no tolerance or NaN exemption",
+  "exclusions": [
+    "Floating-point status flags",
+    "errno",
+    "Other rounding modes",
+    "Other compiler and firmware call contexts",
+    "Hardware execution and timing"
+  ],
+  "upstream_source_sha256": {
+    "libraries/AP_Math/vector2.h": "42bfaad89776567a540d7ae57494cc15b47b8d2247e785606973c5b6129a4182",
+    "libraries/AP_Math/vector2.cpp": "e414645f037cb3964218d3653be0fcf982f167c54d26152ac1ccfe8904513601",
+    "libraries/AP_Math/vector3.h": "be681ccc8fa02af1c2881a76baf36ab7247b75e79cc6d2a9b0cb090bba8b0f98",
+    "libraries/AP_Math/vector3.cpp": "0b153458b4d9b78931793fffc26da6b3d44ed21a2dc7b245d99234baa1f32863",
+    "libraries/AP_Math/AP_Math.h": "046c8a7f9456c3dea938e5326d93826bfb1cf8bb8d4eb7d1c65cbb35363d8811",
+    "libraries/AP_Math/ftype.h": "998e700f15413ae7a9708759349ed196df4f1ee0771e5f22953ab16232618001",
+    "libraries/AP_Math/rotations.h": "ff18e6f22f7a1ba531a719a9a7d699e17abd781cba047ae858a4c07e6655bb41",
+    "libraries/AP_Math/AP_Math.cpp": "33ba521353972aa095bcc69cb35c295665f3aa66556e6bbed5413f9e649fccaa"
+  },
+  "fixture_sha256": {
+    "crates/rustpilot-filters/tests/vector_ops.rs": "9998ff0f073195bd6ad48fc252ba59d524ec7186b730a3e0a7eb002c925321bf",
+    "crates/rustpilot-filters/tests/vector_ops_reference.cpp": "76579100e500f2f7297c8b11c353512c796acb43bce0dedc1ad0330fbf94cfa4",
+    "crates/rustpilot-filters/tests/vector_predicates.rs": "fb5e3a542edf3dfd58b355611d021302561eecd6b1894746a9b7a18dbeda4d60",
+    "crates/rustpilot-filters/tests/vector_predicates_reference.cpp": "c109d796eccf922087a44d650b74cfb46235d454a30e15ddf16e7c09687c610a",
+    "crates/rustpilot-filters/tests/vector_geometry.rs": "0040432aafe14b1970dcc96d712aae12c14b2bba0aaa8a84626c207710af52dd",
+    "crates/rustpilot-filters/tests/vector_geometry_reference.cpp": "729ad2bdf539aaaf830db4971da2b032a816b66aeaa7a3c848ee8361804ce23f",
+    "crates/rustpilot-filters/tests/common/mod.rs": "181e1150fb1098ccbd022075f1fc039867e6c6801c79ecdae8cfc7318ec0a805"
+  },
+  "new_source_sha256": {
+    "crates/rustpilot-filters/src/vector_ops.rs": "3aabe474044909203058034c2fabdc4c1ac6bf5bf19a7dff8356f5424429776e",
+    "crates/rustpilot-filters/src/vector_predicates.rs": "24b3156704708ab07e666e667efa5fbaf9a44dd7ad775d43570331cfa1bf93b2",
+    "crates/rustpilot-filters/src/vector_geometry.rs": "7cb7ae02d7545cab401980d3f600154345399ddce2fb02244a9b02fb89346b02"
+  },
+  "existing_source_sha256": {
+    "crates/rustpilot-filters/src/vector.rs": "34620859a8a179fea0d51e04651fd67e9a8302b64f64877a24964bc484210de7",
+    "crates/rustpilot-filters/src/vector_math.rs": "9dab059068b62d6221d4259cde41b456ba3d5f1b8f2a3d36217d40c8ff1a5928"
+  },
+  "indexing_contract": "Rust array indexing is a documented correction of upstream scalar-member pointer indexing. C++ valid-index results and Vector2 perpendicular are recorded host observations, not portable defined source behavior. Out-of-range Rust panics are tested separately; invalid C++ accesses are not executed."
+}

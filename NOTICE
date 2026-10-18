@@ -11,7 +11,7 @@ Derived sources:
   libraries/AP_Math/crc.h
   libraries/Filter/LowPassFilter.cpp
   libraries/Filter/LowPassFilter.h
-  libraries/AP_Math/AP_Math.cpp (calc_lowpass_alpha_dt)
+  libraries/AP_Math/AP_Math.cpp (calc_lowpass_alpha_dt and floating is_equal)
   libraries/Filter/FilterClass.h
   libraries/Filter/FilterWithBuffer.h
   libraries/Filter/AverageFilter.h
@@ -22,9 +22,9 @@ Derived sources:
   libraries/Filter/Butter.h
   libraries/Filter/LowPassFilter2p.cpp
   libraries/Filter/LowPassFilter2p.h
-  libraries/AP_Math/vector2.h and vector2.cpp (selected component and magnitude operations)
-  libraries/AP_Math/vector3.h and vector3.cpp (selected component and magnitude operations)
-  libraries/AP_Math/AP_Math.h and ftype.h (magnitude helpers and precision rules)
+  libraries/AP_Math/vector2.h and vector2.cpp (selected arithmetic, predicates, magnitudes and geometry)
+  libraries/AP_Math/vector3.h and vector3.cpp (selected arithmetic, predicates, magnitudes and geometry)
+  libraries/AP_Math/AP_Math.h and ftype.h (magnitude helpers, predicates and precision rules)
 
 The ArduPilot translations retain GNU GPL version 3-or-later licensing.
 Several implementation files, including Butter.h and the LowPassFilter .cpp

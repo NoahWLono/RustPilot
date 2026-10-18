@@ -1,0 +1,100 @@
+{
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--workspace",
+        "--release",
+        "--locked"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--release",
+        "-p",
+        "rustpilot-checksums",
+        "-p",
+        "rustpilot-filters",
+        "--target",
+        "thumbv6m-none-eabi"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--release",
+        "-p",
+        "rustpilot-checksums",
+        "-p",
+        "rustpilot-filters",
+        "--target",
+        "thumbv7em-none-eabihf"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "rustpilot-migration",
+        "--",
+        "inventory",
+        "../ardupilot-upstream",
+        "target/inventory"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "diff",
+        "-ru",
+        "crates/rustpilot-migration/baseline",
+        "target/inventory"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "workspace_debug": {
+    "passed": 118,
+    "failed": 0,
+    "ignored": 0
+  },
+  "workspace_release": {
+    "passed": 118,
+    "failed": 0,
+    "ignored": 0
+  }
+}

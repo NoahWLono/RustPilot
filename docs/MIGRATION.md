@@ -5,9 +5,9 @@ dependencies are in scope. Nothing in this repository can currently operate a
 vehicle. Implemented components include checksum functions, scalar and vector
 first-order low-pass filters, two-pole low-pass filters and their tangent
 backend, buffered/average/mode/derivative filters, fixed-coefficient Butterworth
-filters, vector magnitudes/normalization, square roots, and migration inventory
-tooling. Numerical comparisons qualify the
-recorded component build profiles only.
+filters, vector magnitudes/normalization, square roots, component arithmetic,
+predicates, projections, and migration inventory tooling. Numerical comparisons
+qualify the recorded component build profiles only.
 
 ## Baseline scope
 
@@ -59,6 +59,9 @@ Rust implementation. The crate reports identify the implemented subsets:
 - [Tangent backend](../crates/rustpilot-filters/TANGENT_REPORT.md).
 - [Vector magnitude operations](../crates/rustpilot-filters/VECTOR_MATH_REPORT.md).
 - [Square-root backend](../crates/rustpilot-filters/SQUARE_ROOT_REPORT.md).
+- [Vector arithmetic](../crates/rustpilot-filters/VECTOR_OPS_REPORT.md).
+- [Vector predicates and indexing](../crates/rustpilot-filters/VECTOR_PREDICATES_REPORT.md).
+- [Vector projections](../crates/rustpilot-filters/VECTOR_GEOMETRY_REPORT.md).
 - [Inventory tool](../crates/rustpilot-migration/REPORT.md).
 
 [`provenance/ports.tsv`](../provenance/ports.tsv) maps the 28 checksum functions

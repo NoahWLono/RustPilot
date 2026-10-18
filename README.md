@@ -95,6 +95,13 @@ Rust. Double-vector length calculations expose ArduPilot's EKF precision choice
 explicitly, since storing double components does not always mean upstream uses
 double intermediates.
 
+The [vector primitives increment](docs/VECTOR_PRIMITIVES_VERIFICATION.md) adds
+component arithmetic, cross products, predicates, checked indexing, projection,
+axis reflection and perpendicular vectors. Named equality methods preserve
+ArduPilot's epsilon rules; ordinary Rust equality remains exact. The comparisons
+check returning and assignment operations separately because their C++ builds
+can select different NaN payloads.
+
 ## How this project is being done
 
 The repository owner requested the full rewrite and authorized public,
