@@ -42,3 +42,9 @@ This scope is tracked in RustPilot. It does not authorize replacing the user's
 running operating system or installing experimental firmware. The current
 development environment remains the bootstrap environment while replacement
 source and artifacts are developed and reviewed.
+
+The owner permits narrowly scoped unsafe Rust where low-level implementation
+requires it. Each such boundary needs documented memory and concurrency
+invariants, a safe interface where feasible, focused tests and separate review.
+The existing checksum, filter and inventory crates continue to forbid unsafe
+Rust. Permission for a future boundary is not approval of an unreviewed one.

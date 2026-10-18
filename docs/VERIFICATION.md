@@ -10,8 +10,8 @@ checked out at their Git pins. There were no replacement refs in that source.
 
 | Check | Result |
 | --- | --- |
-| Workspace tests with both upstream comparisons explicitly enabled | 28 passed, 0 failed, 0 ignored in debug |
-| Same complete test suite in release | 28 passed, 0 failed, 0 ignored |
+| Workspace tests with both upstream comparisons explicitly enabled | 29 passed, 0 failed, 0 ignored in debug |
+| Same complete test suite in release | 29 passed, 0 failed, 0 ignored |
 | CRC comparison | 5,936 matching outputs: 212 fixtures across 28 functions, in each profile |
 | Scalar filter comparison | 5,006 matching outputs in each profile; NaN payloads treated as equivalent |
 | Rust formatting | Passed |
@@ -21,9 +21,9 @@ checked out at their Git pins. There were no replacement refs in that source.
 | Core library build for `thumbv7em-none-eabihf` | Passed |
 | Deterministic recursive inventory | Repeated generations matched byte for byte |
 
-The 28 tests comprise five checksum behavior tests, one checksum provenance
+The 29 tests comprise five checksum behavior tests, one checksum provenance
 regression and its C++ comparison; seven filter behavior tests, two filter
-provenance regressions and its C++ comparison; and eleven inventory fixtures.
+provenance regressions and its C++ comparison; and twelve inventory fixtures.
 Ordinary `cargo test` intentionally ignores the two C++ comparisons. Passing
 that ordinary command alone does not establish differential results.
 
@@ -53,6 +53,12 @@ diff -ru crates/rustpilot-migration/baseline target/inventory
 The CI workflow repeats these checks with the exact upstream pin. Remote CI
 results belong to the specific GitHub Actions run; the table above records
 local evidence only.
+
+The first remote run exposed inherited Git filter configuration on the runner.
+The inventory now isolates Git from system/global configuration while retaining
+repository-local and explicit environment configuration checks. A subprocess
+regression verifies that inherited filters do not run and local/explicit
+executable filters remain rejected. No user Git configuration is modified.
 
 ## Limits
 

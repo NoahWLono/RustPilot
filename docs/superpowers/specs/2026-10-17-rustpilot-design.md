@@ -15,7 +15,9 @@ of the ArduPilot project. Upstream authors retain credit and license notices.
 
 Use a Rust workspace with dependency-free `no_std` core libraries and a host
 tool using `std`. Forbid unsafe code in the first libraries. Any future unsafe
-hardware boundary needs a documented invariant and separate review. Keep
+hardware boundary needs a documented invariant and separate review. The user
+explicitly permits narrowly reviewed unsafe boundaries for drivers, compiler
+and operating-system work; this does not relax the first libraries' prohibition. Keep
 upstream algorithms and numerical ordering where possible; label changes in
 input handling and initialization explicitly. The user authorized documented
 fixes during conversion and currently has no hardware available. Test against actual pinned C++

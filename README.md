@@ -68,6 +68,8 @@ and [embedded development](https://doc.rust-lang.org/embedded-book/).
 Detailed scope and test results live in [migration status](docs/MIGRATION.md)
 and [verification evidence](docs/VERIFICATION.md). A unit test, inventory row,
 or cross-compiled library never counts as a supported aircraft or board.
+The [next increment](docs/NEXT.md) covers buffered filters and fixed-coefficient
+Butterworth filters, with explicit reset and arithmetic compatibility tests.
 
 ## How this project is being done
 

@@ -19,7 +19,13 @@ index/worktree change aborts before output. Missing checkouts remain explicit
 unresolved dependency rows. The inventory rejects index flags that could hide
 tracked changes, including assume-unchanged and skip-worktree. Nonempty Git
 clean/process filter commands are rejected before status or diff checks.
-Git calls disable filesystem-monitor hooks and replacement-object semantics. Untracked files
+Git calls ignore system/global Git configuration using child-process environment
+settings (`GIT_CONFIG_NOSYSTEM=1`, `GIT_CONFIG_GLOBAL` set to the platform's null
+file). This keeps globally installed LFS filters and other host preferences
+outside the inventory. Repository-local configuration and explicit command-scope
+Git environment settings remain visible; active clean/process commands from
+those sources are rejected. Git calls also disable filesystem-monitor hooks and
+replacement-object semantics. Untracked files
 are excluded. Output must be outside the source checkout.
 
 ## Baseline observed locally
@@ -78,7 +84,7 @@ after verification. Run against an otherwise idle reference checkout.
 
 ## Verification
 
-Eleven tests use temporary local Git repositories: all-object accounting and
+Twelve tests use temporary local Git repositories: all-object accounting and
 byte-for-byte deterministic output, hardware and bootloader evidence, odd
 filenames, root revision pinning through the CLI, tracked dirt rejection,
 index flags that can hide dirt, missing submodules, nested pinned recursion,
@@ -86,7 +92,11 @@ changed dependency revisions, staged gitlink changes with present and missing
 checkouts, and changed nested tracked content. Additional fixtures verify that
 clean/process commands never execute, filesystem-monitor hooks are disabled,
 and replacement objects cannot substitute another tree under the pinned ID.
-No network or upstream code is needed for these tests.
+A subprocess fixture supplies synthetic system/global clean/process filters,
+verifies successful inventory and the CLI revision diagnostic without executing
+the filter, and confirms explicit environment filters remain rejected. It
+changes no user configuration or shared process environment. No network or
+upstream code is needed for these tests.
 
 The following completed successfully with Rust 1.95.0:
 

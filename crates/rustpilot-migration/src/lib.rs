@@ -38,6 +38,14 @@ fn git(repo: &Path, args: &[&str]) -> Result<Vec<u8>> {
         .args(["--no-optional-locks", "-c", "core.fsmonitor=false", "-C"])
         .arg(repo)
         .args(args)
+        // Inventory uses repository configuration plus explicit command-scope
+        // environment values. Host-wide filters (for example Git LFS) and
+        // attributes must not execute or change the inspected source behavior.
+        .env("GIT_CONFIG_NOSYSTEM", "1")
+        .env(
+            "GIT_CONFIG_GLOBAL",
+            if cfg!(windows) { "NUL" } else { "/dev/null" },
+        )
         .env("GIT_NO_REPLACE_OBJECTS", "1")
         .env("GIT_TERMINAL_PROMPT", "0")
         .env_remove("GIT_DIR")
@@ -62,7 +70,8 @@ fn git(repo: &Path, args: &[&str]) -> Result<Vec<u8>> {
 fn reject_executable_filters(repo: &Path) -> Result<()> {
     // Inspect names separately: config subsection names and command values can
     // contain newlines, so `config --list` key/value text is ambiguous. This
-    // query includes local, global, system and command-line inherited config.
+    // query includes repository-local and explicit command-scope config.
+    // The Git wrapper disables inherited system/global configuration.
     let names = git(repo, &["config", "--null", "--name-only", "--list"])?;
     for key in names.split(|byte| *byte == 0) {
         if key.starts_with(b"filter.") && (key.ends_with(b".clean") || key.ends_with(b".process")) {

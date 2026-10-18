@@ -411,3 +411,68 @@ fn rejects_staged_gitlink_change_with_missing_checkout() {
         .contains("tracked changes"));
     assert!(!output.exists());
 }
+#[test]
+fn inherited_global_and_system_filters_are_ignored_but_explicit_filters_are_rejected() {
+    let f = Fixture::new();
+    let repo = f.repo("root");
+    put(&repo, "sample.dat", "original\n");
+    let revision = commit(&repo);
+    let script = f.0.join("filter.sh");
+    let marker = f.0.join("FILTER_EXECUTED");
+    fs::write(&script, format!("touch '{}'\ncat\n", marker.display())).unwrap();
+    let global = f.0.join("global.gitconfig");
+    let system = f.0.join("system.gitconfig");
+    let config = format!(
+        "[filter \"globalfixture\"]\n clean = sh '{}'\n process = sh '{}'\n",
+        script.display(),
+        script.display()
+    );
+    fs::write(&global, &config).unwrap();
+    fs::write(&system, &config).unwrap();
+    // Re-run a successful fixture in a child process: process-scoped inherited
+    // configuration must not affect this test runner's concurrent fixtures.
+    let child = Command::new(std::env::current_exe().unwrap())
+        .args([
+            "--exact",
+            "inventories_every_blob_hardware_and_static_waf_evidence_deterministically",
+            "--nocapture",
+        ])
+        .env("GIT_CONFIG_GLOBAL", &global)
+        .env("GIT_CONFIG_SYSTEM", &system)
+        .env_remove("GIT_CONFIG_NOSYSTEM")
+        .output()
+        .unwrap();
+    assert!(
+        child.status.success(),
+        "child fixture failed: {}{}",
+        String::from_utf8_lossy(&child.stdout),
+        String::from_utf8_lossy(&child.stderr)
+    );
+    let cli = Command::new(env!("CARGO_BIN_EXE_rustpilot-migration"))
+        .arg("inventory")
+        .arg(&repo)
+        .arg(f.0.join("cli-out"))
+        .env("GIT_CONFIG_GLOBAL", &global)
+        .env("GIT_CONFIG_SYSTEM", &system)
+        .env_remove("GIT_CONFIG_NOSYSTEM")
+        .output()
+        .unwrap();
+    assert!(!cli.status.success());
+    assert!(String::from_utf8_lossy(&cli.stderr).contains("revision mismatch"));
+    assert!(String::from_utf8_lossy(&cli.stderr).contains(rustpilot_migration::UPSTREAM_REVISION));
+    assert_ne!(revision, rustpilot_migration::UPSTREAM_REVISION);
+    let explicit = Command::new(env!("CARGO_BIN_EXE_rustpilot-migration"))
+        .arg("inventory")
+        .arg(&repo)
+        .arg(f.0.join("explicit-out"))
+        .env("GIT_CONFIG_GLOBAL", &global)
+        .env("GIT_CONFIG_SYSTEM", &system)
+        .env("GIT_CONFIG_COUNT", "1")
+        .env("GIT_CONFIG_KEY_0", "filter.explicit.clean")
+        .env("GIT_CONFIG_VALUE_0", format!("sh '{}'", script.display()))
+        .output()
+        .unwrap();
+    assert!(!explicit.status.success());
+    assert!(String::from_utf8_lossy(&explicit.stderr).contains("configured Git filters"));
+    assert!(!marker.exists());
+}

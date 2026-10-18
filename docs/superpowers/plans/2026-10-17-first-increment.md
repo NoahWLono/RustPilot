@@ -72,7 +72,7 @@ submodules. Make no completion claims based on file names or source counts.
 - [x] Run tests, release build, formatting and Clippy with warnings denied.
 - [x] Configure CI to repeat tests and direct upstream comparisons.
 - [x] Obtain independent code review, fix material findings, and retest.
-- [ ] Publish README, migration status and exact validation record.
-- [ ] Create the public repository, push, and verify remote HEAD and key files.
+- [x] Publish README, migration status and exact validation record.
+- [x] Create the public repository, push, and verify remote HEAD and key files.
 
 All tasks above are an initial increment. The complete migration remains open.
