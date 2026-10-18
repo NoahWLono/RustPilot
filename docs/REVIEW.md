@@ -88,3 +88,26 @@ generators; observed results
 are recorded in [exact-filter verification](EXACT_FILTER_VERIFICATION.md).
 This remains AI review. Human certification, exhaustive sequence equivalence,
 firmware integration, execution-time bounds and hardware evidence are outstanding.
+
+## Vector magnitude and square-root increment
+
+A separate Codex agent reviewed the integer square-root invariant, rounding
+criterion, normalization and arithmetic bounds. It found no implementation
+defect and independently compared sampled results with 200-digit decimal
+calculations. This is a reviewed argument and a numerical check, not a
+machine-checked proof.
+
+The same reviewer inspected the actual-source vector reference and used a
+separately authored driver to compare finite inputs and NaN combinations for
+both dimensions, storage precisions and EKF settings. Review confirmed the
+right-recursive double norm, component narrowing under float `ftype`, division
+during normalization, epsilon limiting and untouched z bits. It also supplied
+a finite association counterexample now retained as a named regression.
+
+The committed matrix includes fresh NaNs in all operands and checks both
+values of each precision macro. Reference drivers reject incompatible floating
+environments. The reports distinguish compiler and runtime-library profiles,
+ordinary exact Rust equality, output padding and actual floating observations.
+The final review reported no actionable correctness finding in production
+code or reference extraction. Coordinator results are in
+[vector magnitude verification](VECTOR_MATH_VERIFICATION.md).

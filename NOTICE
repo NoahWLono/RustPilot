@@ -22,8 +22,9 @@ Derived sources:
   libraries/Filter/Butter.h
   libraries/Filter/LowPassFilter2p.cpp
   libraries/Filter/LowPassFilter2p.h
-  libraries/AP_Math/vector2.h and vector2.cpp (selected component operations)
-  libraries/AP_Math/vector3.h and vector3.cpp (selected component operations)
+  libraries/AP_Math/vector2.h and vector2.cpp (selected component and magnitude operations)
+  libraries/AP_Math/vector3.h and vector3.cpp (selected component and magnitude operations)
+  libraries/AP_Math/AP_Math.h and ftype.h (magnitude helpers and precision rules)
 
 The ArduPilot translations retain GNU GPL version 3-or-later licensing.
 Several implementation files, including Butter.h and the LowPassFilter .cpp
@@ -49,7 +50,7 @@ and applicable license obligations.
 
 The vector sources also credit Michael Smith (Copyright 2010), Andrew
 Tridgell (Copyright 2012), and Bill Perone's 2003 vector classes. The current
-Rust vector module implements only the operations described in its report.
+Rust vector modules implement only the operations described in their reports.
 The source retains this notice from Bill Perone:
 
 Copyright 2003, This code is provided "as is" and you can use it freely as long as

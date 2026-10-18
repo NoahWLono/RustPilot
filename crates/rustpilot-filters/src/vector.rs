@@ -6,9 +6,11 @@
 // Andrew Tridgell 2012; derived from Bill Perone's 2003 vector classes.
 //! Component vectors and first-order low-pass filters.
 //!
-//! Only construction and component addition, subtraction and scalar
-//! multiplication are translated here. Rotation, geometry, normalization and
-//! other AP_Math vector operations remain outside this module. The upstream
+//! This file implements construction, component addition, subtraction and
+//! scalar multiplication, and the first-order vector filters. Magnitudes,
+//! normalization, scalar division, dot products and precision conversion are
+//! implemented in [`crate::vector_math`], which also defines double vectors.
+//! Rotation and the remaining AP_Math vector operations are unfinished. The
 //! Vector2f/Vector3f filter instantiations correspond to N=2 and N=3.
 //!
 //! Floating-point output bits follow the GCC 16.2.0 x86-64 component profile
@@ -66,6 +68,8 @@ fn vector_alpha(dt: f32, cutoff: f32) -> f32 {
 ///
 /// Arithmetic uses the specific reference NaN choices documented at
 /// [`crate::vector`]. Only N=2 and N=3 have upstream comparison evidence.
+/// The derived `PartialEq` compares components exactly; it does not implement
+/// ArduPilot's epsilon-based vector equality operators.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Vector<const N: usize> {
     /// Components in x, y, then z order for the upstream vector aliases.

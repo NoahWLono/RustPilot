@@ -28,9 +28,10 @@ correction as a successful bitwise match.
 ## Current evidence and next work
 
 The published checksum and filter reports retain their stated evidence limits.
-Existing floating comparison tests accept NaNs regardless of payload; those
-results do not prove equality of every output bit. The stricter next-port gate
-must not inherit that exception silently.
+The original scalar and buffered floating comparison tests accept NaNs
+regardless of payload; those results do not prove equality of every output bit.
+The newer vector, tangent, two-pole and square-root comparisons have no NaN
+exemption.
 
 The owner subsequently confirmed that NaN payload and sign bits must match
 each target/compiler build too. A deterministic Rust NaN policy is not an
@@ -43,9 +44,11 @@ such build still needs its own recorded and tested reference.
 The vector/two-pole increment includes `LowPassFilter2p` coefficient generation
 and its supplied scalar/vector instantiations, plus the first-order vector
 variants. It checks the tangent backend, the fixed cosine result used by this
-formula, and scalar-versus-vector rounding in reset. Broader vector math still
-needs a square-root implementation and other functions. The existing recurrence
-and coefficient comparisons do not complete that broader math scope.
+formula, and scalar-versus-vector rounding in reset. The subsequent
+[vector magnitude increment](VECTOR_MATH_VERIFICATION.md) adds square roots,
+float/double norms, normalization, limiting and conversions, with both EKF
+precision settings. Remaining vector operations and other math functions are
+still unfinished.
 
 ## First candidate result
 

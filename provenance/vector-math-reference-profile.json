@@ -1,0 +1,61 @@
+{
+  "scope": "Bounded host component comparison; full firmware and every embedded target remain unqualified",
+  "ardupilot_revision": "afeb9c4941543d97f3e04fecf257b8f598f49a6a",
+  "compiler_image": "docker.io/library/gcc@sha256:3f73339bf0d3d64081cac3f6d9fdafc6dd4cef2b9c49e0a09f91e97cb0eb139a",
+  "architecture": "x86_64 Linux, little-endian IEEE binary32/binary64",
+  "reference_compiler": "GCC 16.2.0",
+  "reference_glibc": "2.41 inside pinned container",
+  "rust_toolchain": "1.95.0-x86_64-unknown-linux-gnu",
+  "reference_flags": [
+    "-std=c++17",
+    "-O2",
+    "-ffp-contract=off"
+  ],
+  "vector_profile": {
+    "HAL_DEBUG_BUILD": 1,
+    "HAL_WITH_EKF_DOUBLE": [
+      0,
+      1
+    ],
+    "AP_MATH_ALLOW_DOUBLE_FUNCTIONS": [
+      0,
+      1
+    ],
+    "translation_units": "Separate driver and extracted implementation; actual inline header methods retained",
+    "sanitizers": false,
+    "LTO": false
+  },
+  "floating_environment": {
+    "rounding": "nearest, ties to even",
+    "FTZ": false,
+    "DAZ": false
+  },
+  "comparison": "Every returned bit including NaN signs/payloads and signed zeros; no tolerance or NaN exemption",
+  "exclusions": [
+    "Floating-point status flags",
+    "errno",
+    "Other rounding modes",
+    "Other compiler and firmware call contexts",
+    "Hardware execution and timing"
+  ],
+  "upstream_source_sha256": {
+    "libraries/AP_Math/vector2.h": "42bfaad89776567a540d7ae57494cc15b47b8d2247e785606973c5b6129a4182",
+    "libraries/AP_Math/vector2.cpp": "e414645f037cb3964218d3653be0fcf982f167c54d26152ac1ccfe8904513601",
+    "libraries/AP_Math/vector3.h": "be681ccc8fa02af1c2881a76baf36ab7247b75e79cc6d2a9b0cb090bba8b0f98",
+    "libraries/AP_Math/vector3.cpp": "0b153458b4d9b78931793fffc26da6b3d44ed21a2dc7b245d99234baa1f32863",
+    "libraries/AP_Math/AP_Math.h": "046c8a7f9456c3dea938e5326d93826bfb1cf8bb8d4eb7d1c65cbb35363d8811",
+    "libraries/AP_Math/ftype.h": "998e700f15413ae7a9708759349ed196df4f1ee0771e5f22953ab16232618001",
+    "libraries/AP_Math/rotations.h": "ff18e6f22f7a1ba531a719a9a7d699e17abd781cba047ae858a4c07e6655bb41"
+  },
+  "fixture_sha256": {
+    "crates/rustpilot-filters/tests/square_root_reference.cpp": "db9473284a587a3089ef75cca95a3050e7734adf3ce5aeae5fd7f49a57387b51",
+    "crates/rustpilot-filters/tests/square_root.rs": "52be49a0bdbbbc1aa1a2b64c52bb6ed422443cc524125a0cadf70327068819d6",
+    "crates/rustpilot-filters/tests/vector_math_reference.cpp": "a1f1dcaf195b6792ec28a48d1474fed9693bc6470816ed7a05f0d2ef9ca68648",
+    "crates/rustpilot-filters/tests/vector_math.rs": "ec17ff7cf1397961bb1aca19eb8e0705a1e0df0a8810b10a42459c5e9fabef30",
+    "crates/rustpilot-filters/tests/common/mod.rs": "181e1150fb1098ccbd022075f1fc039867e6c6801c79ecdae8cfc7318ec0a805"
+  },
+  "new_source_sha256": {
+    "crates/rustpilot-filters/src/square_root.rs": "8bc707a38db442188f78a93bddb9ccddd401b1678ced7481b44540a21e2bf6ae",
+    "crates/rustpilot-filters/src/vector_math.rs": "9dab059068b62d6221d4259cde41b456ba3d5f1b8f2a3d36217d40c8ff1a5928"
+  }
+}

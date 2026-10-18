@@ -5,7 +5,8 @@
 //! Filters translated from pinned ArduPilot source.
 //!
 //! Vector, biquad, buffered, ordered and fixed-coefficient filters are exposed
-//! through their modules. The tangent backend retains its separate MIT notice.
+//! through their modules. Vector magnitudes and square roots have separate
+//! modules; the tangent backend retains its separate MIT notice.
 //! Numerical compatibility is specific to each module's recorded reference
 //! build; an embedded library build does not qualify that target's behavior.
 //!
@@ -26,8 +27,10 @@ pub mod biquad;
 pub mod buffered;
 pub mod butterworth;
 pub mod ordered;
+pub mod square_root;
 pub mod tangent;
 pub mod vector;
+pub mod vector_math;
 
 pub use buffered::Filter;
 

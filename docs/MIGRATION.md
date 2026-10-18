@@ -5,7 +5,8 @@ dependencies are in scope. Nothing in this repository can currently operate a
 vehicle. Implemented components include checksum functions, scalar and vector
 first-order low-pass filters, two-pole low-pass filters and their tangent
 backend, buffered/average/mode/derivative filters, fixed-coefficient Butterworth
-filters, and migration inventory tooling. Numerical comparisons qualify the
+filters, vector magnitudes/normalization, square roots, and migration inventory
+tooling. Numerical comparisons qualify the
 recorded component build profiles only.
 
 ## Baseline scope
@@ -56,10 +57,12 @@ Rust implementation. The crate reports identify the implemented subsets:
 - [First-order vector filters](../crates/rustpilot-filters/VECTOR_REPORT.md).
 - [Two-pole filters](../crates/rustpilot-filters/BIQUAD_REPORT.md).
 - [Tangent backend](../crates/rustpilot-filters/TANGENT_REPORT.md).
+- [Vector magnitude operations](../crates/rustpilot-filters/VECTOR_MATH_REPORT.md).
+- [Square-root backend](../crates/rustpilot-filters/SQUARE_ROOT_REPORT.md).
 - [Inventory tool](../crates/rustpilot-migration/REPORT.md).
 
 [`provenance/ports.tsv`](../provenance/ports.tsv) maps the 28 checksum functions
-and implemented filter units to their upstream sources and test reports. It also
+and implemented filter/math units to their upstream sources and test reports. It also
 maps source aliases and coefficient sets; multiple rows can describe the same
 implementation. Row counts are not component counts. The raw source inventory
 starts every file at `not_ported`; these separate unit mappings record bounded
@@ -69,7 +72,7 @@ progress without marking entire libraries complete.
 
 | Area | Status and required work |
 | --- | --- |
-| Shared mathematics | CRC, selected vector component operations and a host-reference tangent backend implemented; remaining vector, quaternion, matrix, geographic and other math pending |
+| Shared mathematics | CRC, selected float/double vector operations, tangent and square roots implemented for recorded host profiles; remaining vector, quaternion, matrix, geographic and other math pending |
 | Filters | Scalar/vector first-order, two-pole, buffer/average/mode/derivative and fixed Butterworth components implemented for recorded comparison scopes; notch/harmonic, slew, remaining profiles and integration pending |
 | Core infrastructure | Scheduler, time, parameters, storage, logging and fault reporting pending |
 | Protocols | MAVLink, DroneCAN, DDS, device protocols and generators pending |

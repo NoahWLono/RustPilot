@@ -66,6 +66,7 @@ evidence, outstanding platform dependencies, and rules for future boundaries.
 | Area | Implemented components | Remaining scope |
 | --- | --- | --- |
 | Checksums | Rust port of the `AP_Math/crc` function collection | Integration into Rust protocols and drivers |
+| Mathematics | Selected float/double vector operations, tangent and square-root backends | Remaining vector operations, other math functions and target profiles |
 | Filters | Scalar and vector first-order low-pass, two-pole low-pass, buffers, averages, mode, derivative and fixed-coefficient Butterworth filters | Remaining filter families, other build profiles and vehicle integration |
 | Migration tools | Rust inventory of pinned Git trees and target evidence | Full dependency closure and target qualification |
 | Vehicle firmware | Not implemented | Copter, Plane, Rover, Sub, Tracker, Blimp and variants |
@@ -86,6 +87,13 @@ The compiler and build settings matter: even adding sanitizer instrumentation
 can change which NaN payload the same C++ source returns. Other target/compiler
 builds still need their own comparisons. Earlier filter reports retain their
 disclosed NaN-payload exception.
+
+The [vector magnitude increment](docs/VECTOR_MATH_VERIFICATION.md) extends this
+work to float and double vector lengths, normalization, dot products, division,
+limiting and precision conversion. Its square roots use integer arithmetic in
+Rust. Double-vector length calculations expose ArduPilot's EKF precision choice
+explicitly, since storing double components does not always mean upstream uses
+double intermediates.
 
 ## How this project is being done
 

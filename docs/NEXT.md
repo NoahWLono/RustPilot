@@ -80,7 +80,10 @@ The subsequent [vector/two-pole increment](EXACT_FILTER_VERIFICATION.md)
 implements the first-order vector variants and two-pole coefficient design
 using a native Rust tangent backend and the formula's fixed cosine value.
 It qualifies a recorded host component profile, including NaN output bits.
-Broader vector math and general cosine/square-root support remain unfinished.
+The [magnitude increment](VECTOR_MATH_VERIFICATION.md) subsequently adds
+float/double vector norms, normalization, division, dot products, limiting and
+precision conversion, plus square-root routines. Remaining vector math and
+general cosine support are unfinished.
 Notch and harmonic-notch filters also need
 parameter metadata, logging, dynamic storage and math functions. SlewLimiter
 uses the HAL clock and an exponential. Filter registry/configuration, HAL
