@@ -82,6 +82,9 @@ ChibiOS or vendor C runtime code remains mixed-language. The user explicitly
 included replacing compiler and host OS dependencies in the final goal, with
 Linux compatibility sufficient to build and run RustPilot. This increment uses
 existing tools to bootstrap the work. See [host scope](BOOTSTRAP.md).
+The [interoperability assessment](INTEROPERABILITY.md) records representative
+upstream platform dependencies and the evidence required to retire foreign
+calls without hiding the services they still provide.
 
 Hardware definitions also include other files and generate build configuration.
 Their full include closure, per-vehicle combinations, flash/RAM/stack budgets,

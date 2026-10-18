@@ -54,6 +54,13 @@ memory access is safe. See the Rust project's guidance on
 [unsafe code and safe abstractions](https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html)
 and [embedded development](https://doc.rust-lang.org/embedded-book/).
 
+The migration has not yet resolved FFI and hardware integration for a complete
+target. Keeping a C RTOS or vendor SDK would retain a non-Rust dependency;
+replacing it requires additional implementation and target verification.
+Direct hardware access may need reviewed unsafe Rust without calling C.
+See [FFI and hardware boundaries](docs/INTEROPERABILITY.md) for the current
+evidence, outstanding platform dependencies, and rules for future boundaries.
+
 ## What exists now
 
 | Area | Initial increment | Remaining scope |
