@@ -66,7 +66,7 @@ evidence, outstanding platform dependencies, and rules for future boundaries.
 | Area | Implemented components | Remaining scope |
 | --- | --- | --- |
 | Checksums | Rust port of the `AP_Math/crc` function collection | Integration into Rust protocols and drivers |
-| Filters | Scalar first-order low-pass, buffers, averages, mode, derivative and fixed-coefficient Butterworth filters | Vector variants, remaining filter families and vehicle integration |
+| Filters | Scalar and vector first-order low-pass, two-pole low-pass, buffers, averages, mode, derivative and fixed-coefficient Butterworth filters | Remaining filter families, other build profiles and vehicle integration |
 | Migration tools | Rust inventory of pinned Git trees and target evidence | Full dependency closure and target qualification |
 | Vehicle firmware | Not implemented | Copter, Plane, Rover, Sub, Tracker, Blimp and variants |
 | Hardware support | Definitions inventoried; no supported boards | HALs, drivers, peripherals, bootloaders and timing tests |
@@ -78,6 +78,14 @@ or cross-compiled library never counts as a supported aircraft or board.
 The buffered-filter increment adds explicit reset fixes and checked average
 arithmetic. Its [verification record](docs/BUFFERED_VERIFICATION.md) separates
 reference matches from intentional behavior changes.
+
+The [vector and two-pole increment](docs/EXACT_FILTER_VERIFICATION.md) adds a
+native Rust tangent implementation and exact output-bit comparisons for a
+recorded GCC/x86-64 component build, including NaN payloads and signed zeros.
+The compiler and build settings matter: even adding sanitizer instrumentation
+can change which NaN payload the same C++ source returns. Other target/compiler
+builds still need their own comparisons. Earlier filter reports retain their
+disclosed NaN-payload exception.
 
 ## How this project is being done
 
@@ -104,6 +112,10 @@ Install the Rust toolchain specified in `rust-toolchain.toml`. Builds and pure
 behavior tests need Rust. The ordinary workspace test suite also needs Git;
 differential tests additionally need a C++ compiler and the pinned ArduPilot
 source.
+The strict new filter comparisons use the GCC 16.2.0 build profile recorded in
+[their verification instructions](docs/EXACT_FILTER_VERIFICATION.md). CI pins
+that compiler's container image by digest; an arbitrary C++ compiler is not
+an interchangeable reference for NaN bits.
 
 ```sh
 cargo test --workspace --locked

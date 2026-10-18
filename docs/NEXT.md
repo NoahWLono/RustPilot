@@ -76,16 +76,23 @@ The inspected Filter tree has 47 files: 24 root C++ source/header files, six
 C++ examples, three C++ tests, seven Waf scripts, two MATLAB files and five
 gnuplot files. This increment does not cover all of them.
 
-LowPassFilter still needs vector variants. LowPassFilter2p coefficient design
-needs tangent/cosine support. Notch and harmonic-notch filters also need
+The subsequent [vector/two-pole increment](EXACT_FILTER_VERIFICATION.md)
+implements the first-order vector variants and two-pole coefficient design
+using a native Rust tangent backend and the formula's fixed cosine value.
+It qualifies a recorded host component profile, including NaN output bits.
+Broader vector math and general cosine/square-root support remain unfinished.
+Notch and harmonic-notch filters also need
 parameter metadata, logging, dynamic storage and math functions. SlewLimiter
 uses the HAL clock and an exponential. Filter registry/configuration, HAL
 examples, tests and analysis/build tools each remain migration work.
 
-The owner requires [bit-for-bit numerical matches](NUMERICAL_COMPATIBILITY.md)
-for the next math/filter ports. Characterize candidate transcendental code
-against the actual reference configuration before choosing it. Tolerance-based
-acceptance does not satisfy this requirement.
+The owner requires [bit-for-bit numerical matches](NUMERICAL_COMPATIBILITY.md),
+including NaN payload and sign bits, for each target/compiler build. The
+recorded GCC 16.2.0 profile does not qualify other builds. Characterize future
+transcendental routines and compiler profiles before choosing them.
+Tolerance-based acceptance does not satisfy this requirement. Older filter
+comparisons retain their disclosed NaN exception and still need stricter
+profile qualification if they are to meet this same gate.
 
 The broader vehicle, hardware, dependency, compiler and Linux-compatible host
 work remains in [MIGRATION.md](MIGRATION.md) and [BOOTSTRAP.md](BOOTSTRAP.md).

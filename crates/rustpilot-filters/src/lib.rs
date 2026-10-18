@@ -2,7 +2,12 @@
 // Translated from ArduPilot libraries/Filter/LowPassFilter.{h,cpp} and
 // libraries/AP_Math/AP_Math.cpp, revision afeb9c4941543d97f3e04fecf257b8f598f49a6a.
 // Original algorithms and GPL notices: the ArduPilot contributors.
-//! Scalar filters translated from pinned ArduPilot source.
+//! Filters translated from pinned ArduPilot source.
+//!
+//! Vector, biquad, buffered, ordered and fixed-coefficient filters are exposed
+//! through their modules. The tangent backend retains its separate MIT notice.
+//! Numerical compatibility is specific to each module's recorded reference
+//! build; an embedded library build does not qualify that target's behavior.
 //!
 //! The single-pole filters start with output zero and a pending first sample. The first
 //! apply after construction or [`DigitalLpf::reset`] accepts the sample exactly;
@@ -17,9 +22,12 @@
 #![no_std]
 #![forbid(unsafe_code)]
 
+pub mod biquad;
 pub mod buffered;
 pub mod butterworth;
 pub mod ordered;
+pub mod tangent;
+pub mod vector;
 
 pub use buffered::Filter;
 

@@ -1,0 +1,41 @@
+{
+  "scope": "Bounded host component comparison, not a target or whole-firmware qualification",
+  "ardupilot_revision": "afeb9c4941543d97f3e04fecf257b8f598f49a6a",
+  "math_revision": "1848099f063e99d4ffecbd7667766d54862398b9",
+  "math_source_url": "https://github.com/bminor/glibc/blob/1848099f063e99d4ffecbd7667766d54862398b9/sysdeps/ieee754/flt-32/s_tanf.c",
+  "compiler_image": "docker.io/library/gcc@sha256:3f73339bf0d3d64081cac3f6d9fdafc6dd4cef2b9c49e0a09f91e97cb0eb139a",
+  "compiler_image_tag_at_acquisition": "16.2.0-trixie",
+  "compiler_image_architecture": "linux/amd64",
+  "reference_compiler": "GCC 16.2.0",
+  "image_glibc": "2.41; tangent baseline is explicitly replaced with the pinned C source above",
+  "rust_toolchain": "1.95.0-x86_64-unknown-linux-gnu",
+  "floating_environment": {
+    "rounding": "nearest, ties to even",
+    "FTZ": false,
+    "DAZ": false,
+    "reference_MXCSR_initial": "0x00001f80"
+  },
+  "common_reference_flags": [
+    "-std=c++17",
+    "-O2",
+    "-ffp-contract=off"
+  ],
+  "filter_profile": {
+    "sanitizers": false,
+    "LTO": false,
+    "HAL_DEBUG_BUILD": true,
+    "translation_units": "Driver and implementation separate; see crate reports for extraction and explicit instantiations"
+  },
+  "supplemental_host_math": {
+    "package": "glibc-2.44+r50+g1848099f063e-1",
+    "libm_sha256": "965106704753eefe8c31ae7da6daba3ead3d18c52b19b5fcc41178bcc4aa999d",
+    "enabled_by": "RUSTPILOT_TEST_HOST_GLIBC=1"
+  },
+  "fixture_sha256": {
+    "crates/rustpilot-filters/tests/reference/glibc_tanf.c": "e63af9308bb8e87d9fcdeba8e0d1ac99435e9ac3c12ffa69993c355a65e1d12b",
+    "crates/rustpilot-filters/tests/vector_reference.cpp": "ae0e43fd24b7af4785004a68c4c90ac323e900fd7cfd73de32fdc27dc9d638a6",
+    "crates/rustpilot-filters/tests/vector_reference_math.h": "a0bff6b61d946f8edec71234ce7f90de3055e53c3f6c01c3c5152b28bbd06e9e",
+    "crates/rustpilot-filters/tests/biquad_reference.cpp": "706cbe2b132dec5f27b63a953f79bc1e8d7f88d9490d845905fac07660a938d1",
+    "crates/rustpilot-filters/tests/tangent_reference.cpp": "41a79c44298db6d7de928d0b795fdb9e6fdd698317b04223d0c633033963ab13"
+  }
+}

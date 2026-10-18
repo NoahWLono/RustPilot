@@ -50,3 +50,41 @@ The production algorithm was unchanged. The final coordinator checks cover the
 whole workspace in both profiles and both existing Cortex-M library builds;
 see [buffered-filter verification](BUFFERED_VERIFICATION.md). This review does
 not establish firmware integration, hardware timing or flight safety.
+
+## Exact vector, tangent and two-pole increment
+
+A separate Codex reviewer compared the tangent translation with the pinned
+original C source, checked the tiny-input rounding argument and independently
+ran its debug and release comparisons. It also reviewed vector and biquad
+arithmetic, scalar-versus-vector reset rounding, the mixed-precision coefficient
+formula, integer truncation boundaries and transactional failure behavior.
+The final review reported no remaining blocking finding.
+
+Strict comparisons exposed compiler-dependent NaN choices, including different
+results from the same C++ source when sanitizer instrumentation changed. The
+owner required each target/compiler build's bits to be preserved. The accepted
+component profile therefore records GCC 16.2.0, the container digest, flags,
+translation-unit boundaries and floating-point environment. Rust explicitly
+preserves that profile's NaN choices, including differences between direct
+biquad calls and calls inlined into the owning filter. Other builds remain
+unqualified.
+
+Review prompted the following corrections and additional evidence:
+
+- Correct the i32 reset conversion check to admit the defined fractional
+  interval immediately below `i32::MIN` before truncation.
+- Expand comparisons to the direct biquad API with arbitrary public
+  coefficients, alongside the owning filter's generated coefficients.
+- Preserve independently generated vector and direct-biquad stress corpora as
+  permanent tests. They add fresh, independent NaN payloads to histories,
+  samples and configuration rather than relying on already-poisoned histories.
+- Make the optional native-host math comparison explicit and enforce the
+  installed library hash. Clear dynamic-loader overrides in reference execution.
+- Document the narrow component/compiler profile in public APIs and reports.
+
+The reviewer independently passed the component tests available at review time
+and the two new stress generators. The coordinator checks the final combined workspace suite and the retained
+generators; observed results
+are recorded in [exact-filter verification](EXACT_FILTER_VERIFICATION.md).
+This remains AI review. Human certification, exhaustive sequence equivalence,
+firmware integration, execution-time bounds and hardware evidence are outstanding.

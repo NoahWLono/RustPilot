@@ -1,0 +1,42 @@
+   Compiling rustpilot-filters v0.1.0 ($RUSTPILOT/crates/rustpilot-filters)
+    Finished `release` profile [optimized] target(s) in 0.64s
+     Running tests/biquad.rs (target/release/deps/biquad-1e092984d21fad14)
+
+running 11 tests
+test cutoff_clamp_uses_double_comparison_and_second_operand_for_nan ... ok
+test disable_enable_and_pending_reset_preserve_required_state ... ok
+test disabled_parameters_preserve_coefficients_and_input_bits ... ok
+test integer_failure_does_not_commit_pending_initialization_or_history ... ok
+test scalar_and_vector_reset_have_distinct_rounding ... ok
+test reset_then_apply_executes_recurrence ... ok
+test integer_conversions_truncate_and_check_both_widths ... ok
+independent direct biquad: 150000 records, 1350000 exact-bit observations
+test independent_direct_random_params_and_nan_operands ... ok
+biquad native_math=false nonfinite_inputs=false: 421509 records, 3462999 exact-bit scalar observations
+test actual_pinned_cpp_biquad_finite_inputs_match_every_output_bit ... ok
+biquad sanitizer check: 437482 defined-domain records; payload equality belongs to the separate uninstrumented profile
+test actual_pinned_cpp_biquad_domain_has_no_undefined_conversions ... ok
+biquad native_math=false nonfinite_inputs=true: 437482 records, 3606236 exact-bit scalar observations
+biquad native_math=true nonfinite_inputs=true: 437482 records, 3606236 exact-bit scalar observations
+test actual_pinned_cpp_biquad_matches_every_output_bit ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.20s
+
+     Running tests/tangent.rs (target/release/deps/tangent-6ddeedc626ad56bf)
+
+running 4 tests
+test preserves_the_discovered_finite_regression_bit_for_bit ... ok
+test special_values_match_reference_bits ... ok
+reference glibc1848099f063e99d4ffecbd7667766d54862398b9; FE_TONEAREST; MXCSR=00001f80
+additional host comparison requested: glibc2.44 /usr/lib/libm.so.6
+pinned source values=1010258; host libm values=1010258
+
+Rust tangent exactly matches 1010258 pinned-source outputs, including NaN bits
+test every_output_bit_matches_pinned_tangent_source ... ok
+reference glibc1848099f063e99d4ffecbd7667766d54862398b9; FE_TONEAREST; MXCSR=00001f80
+additional host comparison requested: glibc2.44 /usr/lib/libm.so.6
+pinned source values=16777216; host libm values=16777216
+
+test tiny_branch_highest_binade_is_exhaustively_bit_preserving ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.61s

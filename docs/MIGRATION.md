@@ -2,9 +2,11 @@
 
 The full ArduPilot replacement remains unfinished. All targets, tools, and
 dependencies are in scope. Nothing in this repository can currently operate a
-vehicle. Implemented components include checksum functions, scalar low-pass
-filters, buffered/average/mode/derivative filters, fixed-coefficient Butterworth
-filters, and migration inventory tooling.
+vehicle. Implemented components include checksum functions, scalar and vector
+first-order low-pass filters, two-pole low-pass filters and their tangent
+backend, buffered/average/mode/derivative filters, fixed-coefficient Butterworth
+filters, and migration inventory tooling. Numerical comparisons qualify the
+recorded component build profiles only.
 
 ## Baseline scope
 
@@ -51,6 +53,9 @@ Rust implementation. The crate reports identify the implemented subsets:
 - [Buffer and average filters](../crates/rustpilot-filters/BUFFERED_REPORT.md).
 - [Mode and derivative filters](../crates/rustpilot-filters/ORDERED_REPORT.md).
 - [Butterworth filters](../crates/rustpilot-filters/BUTTERWORTH_REPORT.md).
+- [First-order vector filters](../crates/rustpilot-filters/VECTOR_REPORT.md).
+- [Two-pole filters](../crates/rustpilot-filters/BIQUAD_REPORT.md).
+- [Tangent backend](../crates/rustpilot-filters/TANGENT_REPORT.md).
 - [Inventory tool](../crates/rustpilot-migration/REPORT.md).
 
 [`provenance/ports.tsv`](../provenance/ports.tsv) maps the 28 checksum functions
@@ -64,8 +69,8 @@ progress without marking entire libraries complete.
 
 | Area | Status and required work |
 | --- | --- |
-| Shared mathematics | CRC subset started; vector, quaternion, matrix, geographic and other math pending |
-| Filters | Scalar first-order low-pass, buffer/average/mode/derivative and fixed Butterworth components implemented; vector, two-pole design, notch/harmonic, slew and integration pending |
+| Shared mathematics | CRC, selected vector component operations and a host-reference tangent backend implemented; remaining vector, quaternion, matrix, geographic and other math pending |
+| Filters | Scalar/vector first-order, two-pole, buffer/average/mode/derivative and fixed Butterworth components implemented for recorded comparison scopes; notch/harmonic, slew, remaining profiles and integration pending |
 | Core infrastructure | Scheduler, time, parameters, storage, logging and fault reporting pending |
 | Protocols | MAVLink, DroneCAN, DDS, device protocols and generators pending |
 | Estimation and controls | AHRS, EKFs, attitude/position controllers and navigation pending |

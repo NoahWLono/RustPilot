@@ -53,6 +53,7 @@ pub fn verified_source(reference: &Path, revision: &str, path: &str) -> Result<V
 
 pub struct Reference {
     scratch: PathBuf,
+    reference: PathBuf,
 }
 
 impl Drop for Reference {
@@ -90,13 +91,24 @@ impl Reference {
             std::process::id()
         ));
         fs::create_dir(&scratch).unwrap();
-        let result = Self { scratch };
+        let result = Self { scratch, reference };
         for source in sources {
-            let bytes = verified_source(&reference, PIN, &format!("libraries/Filter/{source}"))
-                .unwrap_or_else(|error| panic!("{error}"));
-            result.write(source, bytes);
+            result.copy_verified(&format!("libraries/Filter/{source}"), source);
         }
         result
+    }
+
+    /// Copy another pinned source, retaining verification before compilation.
+    pub fn copy_verified(&self, upstream_path: &str, destination: &str) {
+        let bytes = verified_source(&self.reference, PIN, upstream_path)
+            .unwrap_or_else(|error| panic!("{error}"));
+        self.write(destination, bytes);
+    }
+
+    /// Read verified bytes for an explicitly documented source extraction.
+    pub fn read_verified(&self, upstream_path: &str) -> Vec<u8> {
+        verified_source(&self.reference, PIN, upstream_path)
+            .unwrap_or_else(|error| panic!("{error}"))
     }
 
     /// Write a test driver or explicitly disclosed dependency shim.
@@ -107,19 +119,33 @@ impl Reference {
     }
 
     pub fn compile(&self, driver: &str) {
+        self.compile_with_flags(
+            driver,
+            &[
+                "-fsanitize=undefined,float-cast-overflow",
+                "-fno-sanitize-recover=all",
+            ],
+        );
+    }
+
+    /// Compile with explicit extra flags. NaN payload selection can depend on
+    /// instrumentation, so strict float references record their own profile.
+    pub fn compile_with_flags(&self, driver: &str, extra_flags: &[&str]) {
+        self.compile_sources_with_flags(driver, &[], extra_flags);
+    }
+
+    /// Keep algorithms in separate translation units when the recorded build
+    /// profile excludes interprocedural optimization with the test driver.
+    pub fn compile_sources_with_flags(&self, driver: &str, sources: &[&str], extra_flags: &[&str]) {
         self.write("driver.cpp", driver);
         let compiler = std::env::var_os("CXX").unwrap_or_else(|| "c++".into());
         let out = Command::new(compiler)
-            .args([
-                "-std=c++17",
-                "-O2",
-                "-ffp-contract=off",
-                "-fsanitize=undefined,float-cast-overflow",
-                "-fno-sanitize-recover=all",
-            ])
+            .args(["-std=c++17", "-O2", "-ffp-contract=off"])
+            .args(extra_flags)
             .arg("-I")
             .arg(&self.scratch)
             .arg(self.scratch.join("driver.cpp"))
+            .args(sources.iter().map(|source| self.scratch.join(source)))
             .arg("-o")
             .arg(self.scratch.join("reference"))
             .output()
@@ -136,6 +162,9 @@ impl Reference {
     pub fn run(&self, input: &str) -> String {
         self.write("input.txt", input);
         let out = Command::new(self.scratch.join("reference"))
+            .env_remove("LD_PRELOAD")
+            .env_remove("LD_LIBRARY_PATH")
+            .env_remove("LD_AUDIT")
             .stdin(Stdio::from(
                 fs::File::open(self.scratch.join("input.txt")).unwrap(),
             ))

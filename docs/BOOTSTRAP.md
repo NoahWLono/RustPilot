@@ -14,6 +14,13 @@ runner environment. The host inventory tool invokes Git. `no_std` core crates
 avoid Rust's standard library at runtime, but that alone says nothing about the
 implementation language of the compiler, linker, host, firmware or boot chain.
 
+The exact vector/two-pole comparisons additionally pin a Docker Official GCC
+16.2.0 image by digest so CI uses the recorded component compiler profile.
+Local reproduction used Podman to run that image. The container image, runtime,
+its Debian userspace and glibc, and rustup's installer remain bootstrap
+dependencies. Pinning them makes the comparison reproducible; it does not
+replace them with Rust implementations.
+
 The Rust compiler normally uses LLVM for code generation; its developer guide
 also describes alternative backends. Selecting a different backend is not
 proof that the compiler's entire dependency graph is Rust-only, supports every

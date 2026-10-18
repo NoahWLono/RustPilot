@@ -20,11 +20,16 @@ Derived sources:
   libraries/Filter/DerivativeFilter.h
   libraries/Filter/DerivativeFilter.cpp
   libraries/Filter/Butter.h
+  libraries/Filter/LowPassFilter2p.cpp
+  libraries/Filter/LowPassFilter2p.h
+  libraries/AP_Math/vector2.h and vector2.cpp (selected component operations)
+  libraries/AP_Math/vector3.h and vector3.cpp (selected component operations)
 
-The listed upstream files except Butter.h contain GNU GPL version 3-or-later
-notices. Butter.h has no per-file license header at the pinned revision.
-The complete GPL version 3 text is distributed in LICENSE, copied from
-ArduPilot's COPYING.txt at the pinned revision.
+The ArduPilot translations retain GNU GPL version 3-or-later licensing.
+Several implementation files, including Butter.h and the LowPassFilter .cpp
+files, have no individual license header at the pinned revision. The complete
+GPL version 3 text is distributed in LICENSE, copied from ArduPilot's
+COPYING.txt at the pinned revision.
 
 The CRC16 portion of upstream crc.cpp also carries this notice, retained here:
 
@@ -41,6 +46,23 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 Submodules are reference inputs, not relicensed copies in this repository.
 Any later translated or redistributed dependency must retain its own notices
 and applicable license obligations.
+
+The vector sources also credit Michael Smith (Copyright 2010), Andrew
+Tridgell (Copyright 2012), and Bill Perone's 2003 vector classes. The current
+Rust vector module implements only the operations described in its report.
+The source retains this notice from Bill Perone:
+
+Copyright 2003, This code is provided "as is" and you can use it freely as long as
+credit is given to Bill Perone in the application it is used in
+
+The tangent translation in crates/rustpilot-filters/src/tangent.rs and the
+unmodified C test fixture tests/reference/glibc_tanf.c derive from glibc
+sysdeps/ieee754/flt-32/s_tanf.c at commit
+1848099f063e99d4ffecbd7667766d54862398b9. That file is MIT licensed and credits
+Alexei Sibidanov, Copyright 2022-2024. It originated in CORE-MATH, revision
+59d21d7. Both files retain the complete copyright and permission notice.
+See crates/rustpilot-filters/TANGENT_REPORT.md for source provenance. This
+per-file MIT license does not change the licenses of other glibc sources.
 
 Initial Rust translations and host tooling were AI-assisted using OpenAI Codex
 and delegated coding agents at the repository owner's request, October 2026.

@@ -32,12 +32,20 @@ Existing floating comparison tests accept NaNs regardless of payload; those
 results do not prove equality of every output bit. The stricter next-port gate
 must not inherit that exception silently.
 
-The next filter work includes complete `LowPassFilter2p` coefficient generation
+The owner subsequently confirmed that NaN payload and sign bits must match
+each target/compiler build too. A deterministic Rust NaN policy is not an
+authorized substitute. The same pinned C++ vector source produced different
+NaN bits when compiled with and without UBSan, so the compiler, flags and
+translation-unit boundaries belong to the reference profile. A component
+profile does not establish the behavior of a complete firmware build. Each
+such build still needs its own recorded and tested reference.
+
+The vector/two-pole increment includes `LowPassFilter2p` coefficient generation
 and its supplied scalar/vector instantiations, plus the first-order vector
-variants. It needs exact `tanf`/`cosf` behavior for coefficient generation and
-the correct scalar-versus-vector rounding in reset. Broader vector math also
-needs a square-root implementation. All required source operations must remain
-in scope; implementing only the recurrence cannot complete these filters.
+variants. It checks the tangent backend, the fixed cosine result used by this
+formula, and scalar-versus-vector rounding in reset. Broader vector math still
+needs a square-root implementation and other functions. The existing recurrence
+and coefficient comparisons do not complete that broader math scope.
 
 ## First candidate result
 
@@ -62,9 +70,8 @@ observed those same output bits. No tolerance was applied.
 The probe used Rust 1.95.0 / LLVM 22.1.2 and GCC 16.2.1 / glibc 2.44 on
 x86_64 Linux. C++ was compiled with `-std=c++17 -O2 -ffp-contract=off` and
 `-fno-builtin-tanf -fno-builtin-cosf -fno-builtin-sqrtf`; separate processes
-exchanged raw input/output bits. This is a math-candidate characterization,
-not a completed upstream-filter comparison or target qualification. The
-reference configuration for a future qualified port must also record the
+exchanged raw input/output bits. This probe characterizes the math candidate. Full upstream-filter comparison
+and target qualification remain separate work. The reference configuration for a future qualified port must also record the
 floating-point control state required above.
 
 The cached crate archive has SHA-256
@@ -74,6 +81,9 @@ This establishes local cache consistency; upstream authenticity was not
 independently established by that check. A future dependency choice still
 needs license, provenance, feature and unsafe-boundary review.
 
-The next step is to implement or select math routines matching each recorded
-reference configuration and rerun exact comparisons. This failed candidate
-check remains evidence of unfinished work.
+The subsequent [tangent port](../crates/rustpilot-filters/TANGENT_REPORT.md)
+translates the installed reference algorithm into Rust and retains its MIT
+notice. Its exact comparisons and the dependent vector/two-pole work are
+recorded in [the increment verification](EXACT_FILTER_VERIFICATION.md).
+The rejected library remains rejected; its counterexample is preserved as a
+regression. Other math routines and target/compiler profiles remain unfinished.

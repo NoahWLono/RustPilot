@@ -3,6 +3,8 @@
 This page retains the first increment's evidence. The later
 [buffered-filter verification](BUFFERED_VERIFICATION.md) records the expanded
 workspace suite and its additional comparison cases.
+The [vector/two-pole verification](EXACT_FILTER_VERIFICATION.md) records the
+subsequent exact-bit profile, including NaN payloads and the tangent backend.
 
 Local verification on October 17, 2026 used Rust 1.95.0 on
 `x86_64-unknown-linux-gnu`, LLVM 22.1.2, GCC 16.2.1 and Git 2.56.0.

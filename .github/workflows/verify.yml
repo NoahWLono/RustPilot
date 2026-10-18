@@ -11,11 +11,19 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    # NaN payload compatibility depends on the reference compiler and build.
+    # Docker Official Image gcc:16.2.0-trixie, pinned linux/amd64 manifest.
+    container:
+      image: gcc@sha256:3f73339bf0d3d64081cac3f6d9fdafc6dd4cef2b9c49e0a09f91e97cb0eb139a
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Install pinned bootstrap toolchain
-        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustpilot-rustup-init.sh
+          sh /tmp/rustpilot-rustup-init.sh -y --profile minimal --default-toolchain 1.95.0
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          "$HOME/.cargo/bin/rustup" component add --toolchain 1.95.0 rustfmt clippy
       - name: Formatting and lint
         run: |
           cargo fmt --all -- --check
