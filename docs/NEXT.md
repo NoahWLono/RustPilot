@@ -82,5 +82,10 @@ parameter metadata, logging, dynamic storage and math functions. SlewLimiter
 uses the HAL clock and an exponential. Filter registry/configuration, HAL
 examples, tests and analysis/build tools each remain migration work.
 
+The owner requires [bit-for-bit numerical matches](NUMERICAL_COMPATIBILITY.md)
+for the next math/filter ports. Characterize candidate transcendental code
+against the actual reference configuration before choosing it. Tolerance-based
+acceptance does not satisfy this requirement.
+
 The broader vehicle, hardware, dependency, compiler and Linux-compatible host
 work remains in [MIGRATION.md](MIGRATION.md) and [BOOTSTRAP.md](BOOTSTRAP.md).
