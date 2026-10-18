@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 use rustpilot_filters::{calc_lowpass_alpha_dt, DigitalLpf, LowPassFilter, LowPassFilterConstDt};
-use std::{
-    fmt::Write as _,
-    fs,
-    path::{Path, PathBuf},
-    process::Command,
-};
+use std::{fmt::Write as _, fs, path::PathBuf, process::Command};
 
 const PIN: &str = "afeb9c4941543d97f3e04fecf257b8f598f49a6a";
 struct Scratch(PathBuf);
@@ -15,30 +10,8 @@ impl Drop for Scratch {
     }
 }
 
-// Compare bytes independently of index flags, then compile these verified
-// bytes from scratch rather than rereading a mutable working-tree path.
-fn verified_source(reference: &Path, revision: &str, path: &str) -> Result<Vec<u8>, String> {
-    let object = Command::new("git")
-        .env("GIT_NO_REPLACE_OBJECTS", "1")
-        .arg("-C")
-        .arg(reference)
-        .args(["show", &format!("{revision}:{path}")])
-        .output()
-        .map_err(|error| format!("git show {path}: {error}"))?;
-    if !object.status.success() {
-        return Err(format!(
-            "git show {path}: {}",
-            String::from_utf8_lossy(&object.stderr)
-        ));
-    }
-    let bytes = fs::read(reference.join(path)).map_err(|error| format!("read {path}: {error}"))?;
-    if bytes != object.stdout {
-        return Err(format!(
-            "reference source differs from pinned object: {path}"
-        ));
-    }
-    Ok(bytes)
-}
+mod common;
+use common::verified_source;
 
 #[test]
 fn hidden_worktree_source_changes_are_rejected() {

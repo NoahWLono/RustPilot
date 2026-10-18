@@ -2,9 +2,9 @@
 // Translated from ArduPilot libraries/Filter/LowPassFilter.{h,cpp} and
 // libraries/AP_Math/AP_Math.cpp, revision afeb9c4941543d97f3e04fecf257b8f598f49a6a.
 // Original algorithms and GPL notices: the ArduPilot contributors.
-//! Scalar single-pole low-pass filters translated from pinned ArduPilot source.
+//! Scalar filters translated from pinned ArduPilot source.
 //!
-//! Every filter starts with output zero and a pending first sample. The first
+//! The single-pole filters start with output zero and a pending first sample. The first
 //! apply after construction or [`DigitalLpf::reset`] accepts the sample exactly;
 //! reset preserves the previous output until that apply. This defines state
 //! which C++ automatic-storage constructors may leave uninitialized.
@@ -16,6 +16,12 @@
 //! crate does not reproduce the upstream INTERNAL_ERROR reporting side effect.
 #![no_std]
 #![forbid(unsafe_code)]
+
+pub mod buffered;
+pub mod butterworth;
+pub mod ordered;
+
+pub use buffered::Filter;
 
 /// Compute alpha with the upstream epsilon thresholds and branch order.
 ///

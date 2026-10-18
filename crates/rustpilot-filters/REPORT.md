@@ -1,4 +1,9 @@
-# Scalar filter verification
+# Scalar low-pass filter verification
+
+This report covers the first-order low-pass port. Other filter families have
+separate reports: [buffer and averages](BUFFERED_REPORT.md),
+[mode and derivative filters](ORDERED_REPORT.md), and
+[fixed-coefficient Butterworth filters](BUTTERWORTH_REPORT.md).
 
 This crate translates the float specializations of ArduPilot's `DigitalLPF`,
 `LowPassFilter`, and `LowPassFilterConstDt`, plus `calc_lowpass_alpha_dt`.

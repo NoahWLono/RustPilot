@@ -6,14 +6,23 @@ Credit belongs to the ArduPilot contributors and the authors of the original
 components. The upstream repository and commit history identify their work.
 RustPilot does not imply affiliation with or endorsement by ArduPilot.
 
-Initial derived sources:
+Derived sources:
   libraries/AP_Math/crc.cpp
   libraries/AP_Math/crc.h
   libraries/Filter/LowPassFilter.cpp
   libraries/Filter/LowPassFilter.h
   libraries/AP_Math/AP_Math.cpp (calc_lowpass_alpha_dt)
+  libraries/Filter/FilterClass.h
+  libraries/Filter/FilterWithBuffer.h
+  libraries/Filter/AverageFilter.h
+  libraries/Filter/ModeFilter.h
+  libraries/Filter/ModeFilter.cpp
+  libraries/Filter/DerivativeFilter.h
+  libraries/Filter/DerivativeFilter.cpp
+  libraries/Filter/Butter.h
 
-The listed upstream files contain GNU GPL version 3-or-later notices.
+The listed upstream files except Butter.h contain GNU GPL version 3-or-later
+notices. Butter.h has no per-file license header at the pinned revision.
 The complete GPL version 3 text is distributed in LICENSE, copied from
 ArduPilot's COPYING.txt at the pinned revision.
 

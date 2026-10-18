@@ -1,9 +1,13 @@
-# Next migration increment
+# Filter migration scope
 
-The next shared-library work is the buffered-filter family and fixed-coefficient
-Butterworth filters at the existing upstream pin. This advances common vehicle
+The buffered-filter increment covers the buffered-filter family and fixed-coefficient
+Butterworth filters at the existing upstream pin. It advances common vehicle
 dependencies without runtime HAL, parameter storage, allocation, or a new
 transcendental-math backend. It remains a component increment.
+
+Its implementation follows the [buffered-filter plan](superpowers/plans/2026-10-17-buffered-filters.md).
+See [verification](BUFFERED_VERIFICATION.md) for observed results. The remaining
+Filter work below stays in scope for subsequent increments.
 
 ## Source scope
 

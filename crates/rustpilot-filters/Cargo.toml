@@ -5,7 +5,7 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
-description = "Scalar low-pass filters translated from pinned ArduPilot source"
+description = "Safe no_std scalar filters translated from pinned ArduPilot source"
 
 [lints]
 workspace = true

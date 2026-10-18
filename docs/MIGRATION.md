@@ -2,7 +2,8 @@
 
 The full ArduPilot replacement remains unfinished. All targets, tools, and
 dependencies are in scope. Nothing in this repository can currently operate a
-vehicle. The initial increment covers checksum functions, scalar low-pass
+vehicle. Implemented components include checksum functions, scalar low-pass
+filters, buffered/average/mode/derivative filters, fixed-coefficient Butterworth
 filters, and migration inventory tooling.
 
 ## Baseline scope
@@ -47,19 +48,24 @@ Rust implementation. The crate reports identify the implemented subsets:
 
 - [Checksum port](../crates/rustpilot-checksums/REPORT.md).
 - [Scalar filter port](../crates/rustpilot-filters/REPORT.md).
+- [Buffer and average filters](../crates/rustpilot-filters/BUFFERED_REPORT.md).
+- [Mode and derivative filters](../crates/rustpilot-filters/ORDERED_REPORT.md).
+- [Butterworth filters](../crates/rustpilot-filters/BUTTERWORTH_REPORT.md).
 - [Inventory tool](../crates/rustpilot-migration/REPORT.md).
 
 [`provenance/ports.tsv`](../provenance/ports.tsv) maps the 28 checksum functions
-and four scalar-filter units to their upstream sources and test reports. The
-raw source inventory starts every file at `not_ported`; these separate unit
-mappings record bounded progress without marking entire libraries complete.
+and implemented filter units to their upstream sources and test reports. It also
+maps source aliases and coefficient sets; multiple rows can describe the same
+implementation. Row counts are not component counts. The raw source inventory
+starts every file at `not_ported`; these separate unit mappings record bounded
+progress without marking entire libraries complete.
 
 ## Remaining work
 
 | Area | Status and required work |
 | --- | --- |
 | Shared mathematics | CRC subset started; vector, quaternion, matrix, geographic and other math pending |
-| Filters | Scalar first-order low-pass started; other families pending |
+| Filters | Scalar first-order low-pass, buffer/average/mode/derivative and fixed Butterworth components implemented; vector, two-pole design, notch/harmonic, slew and integration pending |
 | Core infrastructure | Scheduler, time, parameters, storage, logging and fault reporting pending |
 | Protocols | MAVLink, DroneCAN, DDS, device protocols and generators pending |
 | Estimation and controls | AHRS, EKFs, attitude/position controllers and navigation pending |

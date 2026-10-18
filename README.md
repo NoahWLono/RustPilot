@@ -63,10 +63,10 @@ evidence, outstanding platform dependencies, and rules for future boundaries.
 
 ## What exists now
 
-| Area | Initial increment | Remaining scope |
+| Area | Implemented components | Remaining scope |
 | --- | --- | --- |
 | Checksums | Rust port of the `AP_Math/crc` function collection | Integration into Rust protocols and drivers |
-| Filters | Scalar first-order low-pass filters | Vector variants and remaining filter families |
+| Filters | Scalar first-order low-pass, buffers, averages, mode, derivative and fixed-coefficient Butterworth filters | Vector variants, remaining filter families and vehicle integration |
 | Migration tools | Rust inventory of pinned Git trees and target evidence | Full dependency closure and target qualification |
 | Vehicle firmware | Not implemented | Copter, Plane, Rover, Sub, Tracker, Blimp and variants |
 | Hardware support | Definitions inventoried; no supported boards | HALs, drivers, peripherals, bootloaders and timing tests |
@@ -75,8 +75,9 @@ evidence, outstanding platform dependencies, and rules for future boundaries.
 Detailed scope and test results live in [migration status](docs/MIGRATION.md)
 and [verification evidence](docs/VERIFICATION.md). A unit test, inventory row,
 or cross-compiled library never counts as a supported aircraft or board.
-The [next increment](docs/NEXT.md) covers buffered filters and fixed-coefficient
-Butterworth filters, with explicit reset and arithmetic compatibility tests.
+The buffered-filter increment adds explicit reset fixes and checked average
+arithmetic. Its [verification record](docs/BUFFERED_VERIFICATION.md) separates
+reference matches from intentional behavior changes.
 
 ## How this project is being done
 
